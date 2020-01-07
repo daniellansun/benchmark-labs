@@ -36,7 +36,6 @@ jmh {
     includeTests = true
     duplicateClassesStrategy = 'WARN'
 }
-jmhClasses.dependsOn clean
 
 compileJmhGroovy {
     classpath += compileJmhJava.classpath

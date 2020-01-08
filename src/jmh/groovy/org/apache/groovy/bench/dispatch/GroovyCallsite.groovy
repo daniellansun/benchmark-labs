@@ -18,12 +18,12 @@
  */
 package org.apache.groovy.bench.dispatch
 
-class Callsite {
+import org.openjdk.jmh.infra.Blackhole
 
-    static void dispatch(Object[] receivers, bh) {
+class GroovyCallsite {
+    static void dispatch(Object[] receivers, Blackhole bh) {
         for (Object receiver : receivers) {
             bh.consume(receiver.toString())
         }
     }
-
 }

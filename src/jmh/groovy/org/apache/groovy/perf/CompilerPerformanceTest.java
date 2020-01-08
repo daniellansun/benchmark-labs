@@ -53,16 +53,16 @@ public class CompilerPerformanceTest {
 
         DescriptiveStatistics stats = new DescriptiveStatistics();
 
-        for (int i=0;i<WARMUP+REPEAT;i++) {
-            if (i<WARMUP) {
-                System.out.println("Warmup #" + (i+1));
+        for (int i = 0; i < WARMUP + REPEAT; i++) {
+            if (i < WARMUP) {
+                System.out.println("Warmup #" + (i + 1));
             } else {
-                System.out.println("Round #" + (i-WARMUP));
+                System.out.println("Round #" + (i - WARMUP));
             }
             long dur = executer.execute();
             System.gc();
             System.out.printf("Compile time = %dms%n", dur);
-            if (i>=WARMUP) {
+            if (i >= WARMUP) {
                 stats.addValue((double) dur);
             }
         }

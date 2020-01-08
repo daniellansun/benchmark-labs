@@ -18,7 +18,17 @@
  */
 package org.apache.groovy.bench.dispatch;
 
-import org.openjdk.jmh.annotations.*;
+import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.BenchmarkMode;
+import org.openjdk.jmh.annotations.Fork;
+import org.openjdk.jmh.annotations.Level;
+import org.openjdk.jmh.annotations.Measurement;
+import org.openjdk.jmh.annotations.Mode;
+import org.openjdk.jmh.annotations.OutputTimeUnit;
+import org.openjdk.jmh.annotations.Scope;
+import org.openjdk.jmh.annotations.Setup;
+import org.openjdk.jmh.annotations.State;
+import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.infra.Blackhole;
 
 import java.util.Arrays;
@@ -31,42 +41,26 @@ import java.util.concurrent.TimeUnit;
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 public class CallsiteBench {
+    private static final int LOOP_TIMES = 1_000_000;
 
     @Benchmark
-    public void dispatch_1_monomorphic_groovy(MonomorphicState state, Blackhole bh) {
-        Callsite.dispatch(state.receivers, bh);
+    public void dispatch_monomorphic(MonomorphicState state, Blackhole bh) {
+        for (int i = 0; i < LOOP_TIMES; i++) {
+            GroovyCallsite.dispatch(state.receivers, bh);
+        }
     }
 
     @Benchmark
-    public void dispatch_1_monomorphic_java(MonomorphicState state, Blackhole bh) {
-        JavaDispatch.dispatch(state.receivers, bh);
+    public void dispatch_polymorphic(PolymorphicState state, Blackhole bh) {
+        for (int i = 0; i < LOOP_TIMES; i++) {
+            GroovyCallsite.dispatch(state.receivers, bh);
+        }
     }
 
     @Benchmark
-    public void dispatch_3_polymorphic_groovy(PolymorphicState state, Blackhole bh) {
-        Callsite.dispatch(state.receivers, bh);
-    }
-
-    @Benchmark
-    public void dispatch_3_polymorphic_java(PolymorphicState state, Blackhole bh) {
-        JavaDispatch.dispatch(state.receivers, bh);
-    }
-
-    @Benchmark
-    public void dispatch_8_megamorphic_groovy(MegamorphicState state, Blackhole bh) {
-        Callsite.dispatch(state.receivers, bh);
-    }
-
-    @Benchmark
-    public void dispatch_8_megamorphic_java(MegamorphicState state, Blackhole bh) {
-        JavaDispatch.dispatch(state.receivers, bh);
-    }
-
-    private static class JavaDispatch {
-        static void dispatch(Object[] receivers, Blackhole bh) {
-            for (Object receiver : receivers) {
-                bh.consume(receiver.toString());
-            }
+    public void dispatch_megamorphic(MegamorphicState state, Blackhole bh) {
+        for (int i = 0; i < LOOP_TIMES; i++) {
+            GroovyCallsite.dispatch(state.receivers, bh);
         }
     }
 

@@ -41,6 +41,7 @@ jmh {
 }
 
 compileJmhGroovy {
+    groovyOptions.optimizationOptions['indy'] = true
     classpath += compileJmhJava.classpath
 }
 

@@ -44,7 +44,10 @@ jmh {
 }
 
 compileJmhGroovy {
-    groovyOptions.optimizationOptions['indy'] = true
+    if (classifier.contains('indy')) {
+        groovyOptions.optimizationOptions['indy'] = true
+    }
+
     classpath += compileJmhJava.classpath
 }
 

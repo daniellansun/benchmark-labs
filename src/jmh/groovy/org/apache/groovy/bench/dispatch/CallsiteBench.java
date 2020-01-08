@@ -41,27 +41,19 @@ import java.util.concurrent.TimeUnit;
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 public class CallsiteBench {
-    private static final int LOOP_TIMES = 1_000_000;
-
     @Benchmark
     public void dispatch_monomorphic(MonomorphicState state, Blackhole bh) {
-        for (int i = 0; i < LOOP_TIMES; i++) {
-            GroovyCallsite.dispatch(state.receivers, bh);
-        }
+        GroovyCallsite.dispatch(state.receivers, bh);
     }
 
     @Benchmark
     public void dispatch_polymorphic(PolymorphicState state, Blackhole bh) {
-        for (int i = 0; i < LOOP_TIMES; i++) {
-            GroovyCallsite.dispatch(state.receivers, bh);
-        }
+        GroovyCallsite.dispatch(state.receivers, bh);
     }
 
     @Benchmark
     public void dispatch_megamorphic(MegamorphicState state, Blackhole bh) {
-        for (int i = 0; i < LOOP_TIMES; i++) {
-            GroovyCallsite.dispatch(state.receivers, bh);
-        }
+        GroovyCallsite.dispatch(state.receivers, bh);
     }
 
     private static final int RECEIVER_COUNT = 64;

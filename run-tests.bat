@@ -1,2 +1,2 @@
 @echo off
-gradlew clean jmh --no-build-cache -Pclassifier=%1
+gradlew clean jmh --no-build-cache --no-daemon -Pclassifier=%1
